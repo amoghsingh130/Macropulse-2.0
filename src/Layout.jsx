@@ -1,0 +1,56 @@
+import React from 'react';
+
+export default function Layout({ children }) {
+  return (
+    <div className="min-h-screen bg-slate-950 text-white">
+      <style>{`
+        :root {
+          --background: 222.2 84% 4.9%;
+          --foreground: 210 40% 98%;
+          --card: 222.2 84% 4.9%;
+          --card-foreground: 210 40% 98%;
+          --popover: 222.2 84% 4.9%;
+          --popover-foreground: 210 40% 98%;
+          --primary: 263.4 70% 50.4%;
+          --primary-foreground: 210 40% 98%;
+          --secondary: 217.2 32.6% 17.5%;
+          --secondary-foreground: 210 40% 98%;
+          --muted: 217.2 32.6% 17.5%;
+          --muted-foreground: 215 20.2% 65.1%;
+          --accent: 217.2 32.6% 17.5%;
+          --accent-foreground: 210 40% 98%;
+          --destructive: 0 62.8% 30.6%;
+          --destructive-foreground: 210 40% 98%;
+          --border: 217.2 32.6% 17.5%;
+          --input: 217.2 32.6% 17.5%;
+          --ring: 263.4 70% 50.4%;
+        }
+        
+        body {
+          background-color: #020617;
+          color: #f8fafc;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: #475569;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: #64748b;
+        }
+      `}</style>
+      {children}
+    </div>
+  );
+}
