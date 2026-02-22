@@ -4,7 +4,7 @@
  * Defaults to ngrok URL for demo.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_URL;
 
 const EXTRA_HEADERS = API_BASE.includes("ngrok")
   ? { "ngrok-skip-browser-warning": "true" }
