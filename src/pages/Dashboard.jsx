@@ -26,7 +26,7 @@ import { generateCurrentSnapshot, getCachedTimeline } from '@/components/macropu
 import { computeRegime, fetchState, normaliseResponse } from '@/components/macropulse/api';
 
 // Backend URL indicator (shown in UI)
-const BACKEND_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const BACKEND_URL = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
