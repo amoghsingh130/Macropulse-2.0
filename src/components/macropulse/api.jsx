@@ -34,7 +34,7 @@ export async function computeRegime({ startDate, endDate, mode = "auto" }) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...EXTRA_HEADERS,
+      EXTRA_HEADERS,
     },
     body: JSON.stringify({
       start_date: startDate,
