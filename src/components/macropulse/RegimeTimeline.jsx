@@ -87,6 +87,14 @@ export default function RegimeTimeline({ data, isLoading }) {
     return result;
   }, [filteredData]);
 
+  if (isLoading) {
+    return (
+      <div className="animate-pulse">
+        <div className="h-96 bg-slate-800 rounded-2xl" />
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
