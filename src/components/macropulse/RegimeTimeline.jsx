@@ -64,23 +64,15 @@ const TransitionLabel = ({ viewBox, toRegime }) => {
 export default function RegimeTimeline({ data, isLoading }) {
   const [dateRange, setDateRange] = useState([0, 100]);
 
-  if (isLoading) {
-    return (
-      <div className="animate-pulse">
-        <div className="h-96 bg-slate-800 rounded-2xl" />
-      </div>
-    );
-  }
-
-  const startIndex = Math.floor((dateRange[0] / 100) * data.length);
-  const endIndex   = Math.ceil ((dateRange[1] / 100) * data.length);
-  const filteredData = data.slice(startIndex, endIndex);
+  const startIndex = Math.floor((dateRange[0] / 100) * (data?.length || 0));
+  const endIndex   = Math.ceil ((dateRange[1] / 100) * (data?.length || 0));
+  const filteredData = (data || []).slice(startIndex, endIndex);
 
   const spyPrices = filteredData.map(d => d.spy_price).filter(Boolean);
   const minSpy = spyPrices.length ? Math.min(...spyPrices) * 0.98 : 0;
   const maxSpy = spyPrices.length ? Math.max(...spyPrices) * 1.02 : 600;
 
-  // Detect regime transitions
+  // Detect regime transitions — must be before any early return
   const transitions = useMemo(() => {
     const result = [];
     for (let i = 1; i < filteredData.length; i++) {
