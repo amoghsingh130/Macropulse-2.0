@@ -167,35 +167,24 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Status Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${
-            dataSource === 'backend'
-              ? (isDemoMode
-                  ? 'bg-amber-500/10 border-amber-500/30'
-                  : 'bg-emerald-500/10 border-emerald-500/30')
-              : 'bg-slate-700/30 border-slate-600/30'
-          }`}
-        >
-          <Database className={`w-5 h-5 ${dataSource === 'backend' ? (isDemoMode ? 'text-amber-400' : 'text-emerald-400') : 'text-slate-400'}`} />
-          <div>
-            {dataSource === 'backend' ? (
-              <>
-                <p className={`font-medium ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`}>
-                  Backend Connected — {isDemoMode ? 'Demo Mode' : 'Live Mode'}
-                </p>
-                <p className="text-sm text-slate-400">{BACKEND_URL} · {isDemoMode ? 'Cached dataset (2018-present)' : 'Live market data via Stooq'}</p>
-              </>
-            ) : (
-              <>
-                <p className="font-medium text-slate-300">Local Mock Data</p>
-                <p className="text-sm text-slate-500">Backend not connected ({BACKEND_URL}). Start the FastAPI server to use real analysis.</p>
-              </>
-            )}
-          </div>
-        </motion.div>
+        {/* Status Banner — only shown when backend is connected */}
+        {dataSource === 'backend' && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${
+              isDemoMode ? 'bg-amber-500/10 border-amber-500/30' : 'bg-emerald-500/10 border-emerald-500/30'
+            }`}
+          >
+            <Database className={`w-5 h-5 ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`} />
+            <div>
+              <p className={`font-medium ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`}>
+                Backend Connected — {isDemoMode ? 'Demo Mode' : 'Live Mode'}
+              </p>
+              <p className="text-sm text-slate-400">{BACKEND_URL} · {isDemoMode ? 'Cached dataset (2018-present)' : 'Live market data via Stooq'}</p>
+            </div>
+          </motion.div>
+        )}
 
         {/* Top Section - Regime Badge & Confidence */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
