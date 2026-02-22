@@ -47,32 +47,56 @@ export default function Dashboard() {
   // Try to load from backend state first; fall back to local mock
   const loadData = async () => {
     setIsLoading(true);
+
+    let ok = false;
+    try {
+      await fetchHealth();
+      ok = true;
+      setBackendOnline(true);
+    } catch (err) {
+      ok = false;
+      setBackendOnline(false);
+    }
+
+    if (!ok) {
+      await new Promise(r => setTimeout(r, 800));
+      const currentSnapshot = generateCurrentSnapshot();
+      const timeline = getCachedTimeline();
+      setSnapshot(currentSnapshot);
+      setTimelineData(timeline);
+      setDataSource('local');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const state = await fetchState();
       if (state) {
         const norm = normaliseResponse(state);
         setSnapshot(norm);
         setTimelineData(norm.timelineData);
-        setBackendOnline(true);
         setDataSource('backend');
         setIsDemoMode(state.data_mode_used === 'demo');
         setIsLoading(false);
         return;
       }
-      setBackendOnline(true); // reachable but no state yet
-    } catch (_) {
-      setBackendOnline(false);
-    }
-    // Fallback: local mock data
-    await new Promise(r => setTimeout(r, 800));
-    const currentSnapshot = generateCurrentSnapshot();
-    const timeline = getCachedTimeline();
-    setSnapshot(currentSnapshot);
-    setTimelineData(timeline);
-    setDataSource('local');
-    setIsLoading(false);
-  };
 
+      setDataSource('backend');
+      setIsLoading(false);
+      return;
+    } catch (err) {
+      console.warn("Backend reachable but state fetch failed:", err?.message);
+
+      await new Promise(r => setTimeout(r, 800));
+      const currentSnapshot = generateCurrentSnapshot();
+      const timeline = getCachedTimeline();
+      setSnapshot(currentSnapshot);
+      setTimelineData(timeline);
+      setDataSource('local');
+      setIsLoading(false);
+    }
+  };
+  
   const handleCompute = async () => {
     setIsLoading(true);
     if (backendOnline) {
