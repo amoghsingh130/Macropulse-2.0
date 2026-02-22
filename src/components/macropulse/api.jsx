@@ -5,7 +5,7 @@
  */
 
 const API_BASE =
-  import.meta.env.VITE_API_URL || "https://marked-conrad-missing.ngrok-free.dev";
+  import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const NGROK_HEADERS = {
   "ngrok-skip-browser-warning": "true",
