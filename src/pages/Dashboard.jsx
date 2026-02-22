@@ -48,55 +48,35 @@ export default function Dashboard() {
   const loadData = async () => {
     setIsLoading(true);
 
-    let ok = false;
     try {
-      await fetchHealth();
-      ok = true;
       setBackendOnline(true);
+
+      const result = await computeRegime({
+        startDate: format(dateRange.from, "yyyy-MM-dd"),
+        endDate: format(dateRange.to, "yyyy-MM-dd"),
+        mode: isDemoMode ? "demo" : "auto",
+      });
+
+      const norm = normaliseResponse(result);
+      setSnapshot(norm);
+      setTimelineData(norm.timelineData);
+      setDataSource("backend");
+      setIsLoading(false);
+      return;
     } catch (err) {
-      ok = false;
+      console.warn("Backend compute failed, using local mock:", err?.message);
       setBackendOnline(false);
     }
 
-    if (!ok) {
-      await new Promise(r => setTimeout(r, 800));
-      const currentSnapshot = generateCurrentSnapshot();
-      const timeline = getCachedTimeline();
-      setSnapshot(currentSnapshot);
-      setTimelineData(timeline);
-      setDataSource('local');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const state = await fetchState();
-      if (state) {
-        const norm = normaliseResponse(state);
-        setSnapshot(norm);
-        setTimelineData(norm.timelineData);
-        setDataSource('backend');
-        setIsDemoMode(state.data_mode_used === 'demo');
-        setIsLoading(false);
-        return;
-      }
-
-      setDataSource('backend');
-      setIsLoading(false);
-      return;
-    } catch (err) {
-      console.warn("Backend reachable but state fetch failed:", err?.message);
-
-      await new Promise(r => setTimeout(r, 800));
-      const currentSnapshot = generateCurrentSnapshot();
-      const timeline = getCachedTimeline();
-      setSnapshot(currentSnapshot);
-      setTimelineData(timeline);
-      setDataSource('local');
-      setIsLoading(false);
-    }
+    await new Promise((r) => setTimeout(r, 800));
+    const currentSnapshot = generateCurrentSnapshot();
+    const timeline = getCachedTimeline();
+    setSnapshot(currentSnapshot);
+    setTimelineData(timeline);
+    setDataSource("local");
+    setIsLoading(false);
   };
-  
+    
   const handleCompute = async () => {
     setIsLoading(true);
     if (backendOnline) {
