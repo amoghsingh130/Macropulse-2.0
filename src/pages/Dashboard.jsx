@@ -160,22 +160,35 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Demo Mode Banner */}
-        {isDemoMode && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30"
-          >
-            <div className="flex items-center gap-3">
-              <Database className="w-5 h-5 text-amber-400" />
-              <div>
-                <p className="text-amber-400 font-medium">Demo Mode Active</p>
-                <p className="text-sm text-slate-400">Using cached historical data (2020-present). Toggle to Live for real-time data.</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        {/* Status Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`mb-6 p-4 rounded-xl border flex items-center gap-3 ${
+            dataSource === 'backend'
+              ? (isDemoMode
+                  ? 'bg-amber-500/10 border-amber-500/30'
+                  : 'bg-emerald-500/10 border-emerald-500/30')
+              : 'bg-slate-700/30 border-slate-600/30'
+          }`}
+        >
+          <Database className={`w-5 h-5 ${dataSource === 'backend' ? (isDemoMode ? 'text-amber-400' : 'text-emerald-400') : 'text-slate-400'}`} />
+          <div>
+            {dataSource === 'backend' ? (
+              <>
+                <p className={`font-medium ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`}>
+                  Backend Connected — {isDemoMode ? 'Demo Mode' : 'Live Mode'}
+                </p>
+                <p className="text-sm text-slate-400">{BACKEND_URL} · {isDemoMode ? 'Cached dataset (2018-present)' : 'Live market data via Stooq'}</p>
+              </>
+            ) : (
+              <>
+                <p className="font-medium text-slate-300">Local Mock Data</p>
+                <p className="text-sm text-slate-500">Backend not connected ({BACKEND_URL}). Start the FastAPI server to use real analysis.</p>
+              </>
+            )}
+          </div>
+        </motion.div>
 
         {/* Top Section - Regime Badge & Confidence */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
