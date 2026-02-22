@@ -27,8 +27,8 @@ export default function RegimeAlertSystem({ currentRegime, regimeHistory, setReg
 
   return (
     <>
-      {/* Floating Alert */}
-      <AnimatePresence>
+      {/* Floating Alert — skip when showTableOnly */}
+      {!showTableOnly && <AnimatePresence>
         {alert && (
           <motion.div
             key="alert"
