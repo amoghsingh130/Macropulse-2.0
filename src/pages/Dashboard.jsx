@@ -207,8 +207,13 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Middle Section - Asset Allocation */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Why This Regime — institutional explanation under the badge */}
+        <div className="mb-6">
+          <WhyThisRegime regime={snapshot?.regime} isLoading={isLoading} />
+        </div>
+
+        {/* Middle Section - Asset Allocation + Distribution */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <AssetAllocationCard 
             type="overweight" 
             assets={snapshot?.overweight_assets || []} 
@@ -219,6 +224,7 @@ export default function Dashboard() {
             assets={snapshot?.underweight_assets || []} 
             isLoading={isLoading} 
           />
+          <RegimeDistribution data={timelineData} isLoading={isLoading} />
         </div>
 
         {/* Explanation & Triggers */}
@@ -247,16 +253,19 @@ export default function Dashboard() {
           isLoading={isLoading} 
         />
 
+        {/* Methodology collapsible */}
+        <MethodologySection />
+
         {/* Footer Info */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="mt-8 text-center"
+          className="mt-6 text-center"
         >
           <p className="text-slate-600 text-sm">
-            Last updated: {snapshot?.date ? format(new Date(snapshot.date), 'MMMM d, yyyy') : '-'} • 
-            Classification based on 20-day rolling features from SPY, QQQ, TLT, IEF, HYG, LQD, UUP, DBC, TIP
+            Last updated: {snapshot?.date ? format(new Date(snapshot.date), 'MMMM d, yyyy') : '-'} · 
+            Classification based on 21-day rolling features from SPY, QQQ, TLT, IEF, HYG, LQD, UUP, DBC, TIP
           </p>
         </motion.div>
       </main>
