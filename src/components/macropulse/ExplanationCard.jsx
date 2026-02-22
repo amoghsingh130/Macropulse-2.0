@@ -28,11 +28,17 @@ export default function ExplanationCard({ explanation, isLoading }) {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative space-y-3">
         <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-500" />
-        <p className="pl-4 text-slate-300 leading-relaxed">
-          {explanation}
-        </p>
+        {/* Handle both string (mock) and array (backend) */}
+        {Array.isArray(explanation)
+          ? explanation.map((line, i) => (
+              <p key={i} className="pl-4 text-slate-300 leading-relaxed">{line}</p>
+            ))
+          : explanation.split('\n\n').filter(Boolean).map((line, i) => (
+              <p key={i} className="pl-4 text-slate-300 leading-relaxed">{line}</p>
+            ))
+        }
       </div>
 
       <div className="mt-4 pt-4 border-t border-slate-700/50">
