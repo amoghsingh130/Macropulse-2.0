@@ -22,6 +22,9 @@ import ExplanationCard from '@/components/macropulse/ExplanationCard';
 import TriggersCard from '@/components/macropulse/TriggersCard';
 import RegimeTimeline from '@/components/macropulse/RegimeTimeline';
 import FeatureMetrics from '@/components/macropulse/FeatureMetrics';
+import WhyThisRegime from '@/components/macropulse/WhyThisRegime';
+import RegimeDistribution from '@/components/macropulse/RegimeDistribution';
+import MethodologySection from '@/components/macropulse/MethodologySection';
 import { generateCurrentSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
 import { computeRegime, fetchState, normaliseResponse } from '@/components/macropulse/api';
 
