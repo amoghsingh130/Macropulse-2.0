@@ -6,10 +6,9 @@
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-const EXTRA_HEADERS =
-  API_BASE.includes("ngrok-free.dev")
-    ? { "ngrok-skip-browser-warning": "true" }
-    : {};
+const EXTRA_HEADERS = API_BASE.includes("ngrok")
+  ? { "ngrok-skip-browser-warning": "true" }
+  : {};
 
 async function parseJsonSafely(res) {
   const text = await res.text();
