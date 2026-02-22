@@ -23,6 +23,7 @@ import TriggersCard from '@/components/macropulse/TriggersCard';
 import RegimeTimeline from '@/components/macropulse/RegimeTimeline';
 import FeatureMetrics from '@/components/macropulse/FeatureMetrics';
 import { generateCurrentSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
+import { computeRegime, fetchState, normaliseResponse } from '@/components/macropulse/api';
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
