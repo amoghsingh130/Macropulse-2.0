@@ -23,7 +23,7 @@ async function parseJsonSafely(res) {
 
 export async function fetchHealth() {
   const res = await fetch(`${API_BASE}/api/health`, {
-    headers: NGROK_HEADERS,
+    headers: EXTRA_HEADERS,
   });
   if (!res.ok) throw new Error(`Backend unreachable (${res.status})`);
   return parseJsonSafely(res);
@@ -34,7 +34,7 @@ export async function computeRegime({ startDate, endDate, mode = "auto" }) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...NGROK_HEADERS,
+      ...EXTRA_HEADERS,
     },
     body: JSON.stringify({
       start_date: startDate,
@@ -55,7 +55,7 @@ export async function computeRegime({ startDate, endDate, mode = "auto" }) {
 
 export async function fetchState() {
   const res = await fetch(`${API_BASE}/api/state`, {
-    headers: NGROK_HEADERS,
+    headers: EXTRA_HEADERS,
   });
 
   if (res.status === 404) return null;
