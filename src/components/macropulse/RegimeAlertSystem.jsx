@@ -28,48 +28,50 @@ export default function RegimeAlertSystem({ currentRegime, regimeHistory, setReg
   return (
     <>
       {/* Floating Alert — skip when showTableOnly */}
-      {!showTableOnly && <AnimatePresence>
-        {alert && (
-          <motion.div
-            key="alert"
-            initial={{ opacity: 0, y: -60, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -40, scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed top-20 right-6 z-50 max-w-sm w-full"
-          >
-            <div className="rounded-xl border border-amber-500/40 bg-slate-900 shadow-2xl shadow-amber-500/10 p-4">
-              <div className="flex items-start gap-3">
-                <motion.div
-                  animate={{ scale: [1, 1.15, 1] }}
-                  transition={{ duration: 0.5, repeat: 5 }}
-                  className="p-2 rounded-lg bg-amber-500/20 flex-shrink-0"
-                >
-                  <AlertTriangle className="w-5 h-5 text-amber-400" />
-                </motion.div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-bold text-amber-300 text-sm">Regime Shift Detected</p>
-                  <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded"
-                      style={{ color: REGIME_COLORS[alert.from], background: `${REGIME_COLORS[alert.from]}22` }}>
-                      {REGIME_LABELS[alert.from]}
-                    </span>
-                    <span className="text-slate-500 text-xs">→</span>
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded"
-                      style={{ color: REGIME_COLORS[alert.to], background: `${REGIME_COLORS[alert.to]}22` }}>
-                      {REGIME_LABELS[alert.to]}
-                    </span>
+      {!showTableOnly && (
+        <AnimatePresence>
+          {alert && (
+            <motion.div
+              key="alert"
+              initial={{ opacity: 0, y: -60, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -40, scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              className="fixed top-20 right-6 z-50 max-w-sm w-full"
+            >
+              <div className="rounded-xl border border-amber-500/40 bg-slate-900 shadow-2xl shadow-amber-500/10 p-4">
+                <div className="flex items-start gap-3">
+                  <motion.div
+                    animate={{ scale: [1, 1.15, 1] }}
+                    transition={{ duration: 0.5, repeat: 5 }}
+                    className="p-2 rounded-lg bg-amber-500/20 flex-shrink-0"
+                  >
+                    <AlertTriangle className="w-5 h-5 text-amber-400" />
+                  </motion.div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-amber-300 text-sm">Regime Shift Detected</p>
+                    <div className="flex items-center gap-2 mt-1 flex-wrap">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded"
+                        style={{ color: REGIME_COLORS[alert.from], background: `${REGIME_COLORS[alert.from]}22` }}>
+                        {REGIME_LABELS[alert.from]}
+                      </span>
+                      <span className="text-slate-500 text-xs">→</span>
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded"
+                        style={{ color: REGIME_COLORS[alert.to], background: `${REGIME_COLORS[alert.to]}22` }}>
+                        {REGIME_LABELS[alert.to]}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-500 mt-1">{formatTime(alert.timestamp)}</p>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1">{formatTime(alert.timestamp)}</p>
+                  <button onClick={() => setAlert(null)} className="text-slate-500 hover:text-white p-1">
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
-                <button onClick={() => setAlert(null)} className="text-slate-500 hover:text-white p-1">
-                  <X className="w-4 h-4" />
-                </button>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
 
       {/* History Table */}
       {regimeHistory.length > 0 && (
