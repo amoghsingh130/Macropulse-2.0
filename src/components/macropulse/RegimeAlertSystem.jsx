@@ -69,7 +69,7 @@ export default function RegimeAlertSystem({ currentRegime, regimeHistory, setReg
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>}
 
       {/* History Table */}
       {regimeHistory.length > 0 && (
