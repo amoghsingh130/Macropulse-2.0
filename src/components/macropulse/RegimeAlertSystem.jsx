@@ -7,7 +7,7 @@ function formatTime(ts) {
   return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 
-export default function RegimeAlertSystem({ currentRegime, regimeHistory, setRegimeHistory }) {
+export default function RegimeAlertSystem({ currentRegime, regimeHistory, setRegimeHistory, showTableOnly = false }) {
   const [alert, setAlert] = useState(null);
   const prevRegimeRef = useRef(null);
 
