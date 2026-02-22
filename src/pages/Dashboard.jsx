@@ -25,11 +25,16 @@ import FeatureMetrics from '@/components/macropulse/FeatureMetrics';
 import { generateCurrentSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
 import { computeRegime, fetchState, normaliseResponse } from '@/components/macropulse/api';
 
+// Backend URL indicator (shown in UI)
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [isDemoMode, setIsDemoMode] = useState(true);
   const [snapshot, setSnapshot] = useState(null);
   const [timelineData, setTimelineData] = useState([]);
+  const [backendOnline, setBackendOnline] = useState(false);
+  const [dataSource, setDataSource] = useState('local'); // 'local' | 'backend'
   const [dateRange, setDateRange] = useState({
     from: new Date('2020-01-01'),
     to: new Date()
@@ -39,26 +44,59 @@ export default function Dashboard() {
     loadData();
   }, []);
 
+  // Try to load from backend state first; fall back to local mock
   const loadData = async () => {
     setIsLoading(true);
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    try {
+      const state = await fetchState();
+      if (state) {
+        const norm = normaliseResponse(state);
+        setSnapshot(norm);
+        setTimelineData(norm.timelineData);
+        setBackendOnline(true);
+        setDataSource('backend');
+        setIsDemoMode(state.data_mode_used === 'demo');
+        setIsLoading(false);
+        return;
+      }
+      setBackendOnline(true); // reachable but no state yet
+    } catch (_) {
+      setBackendOnline(false);
+    }
+    // Fallback: local mock data
+    await new Promise(r => setTimeout(r, 800));
     const currentSnapshot = generateCurrentSnapshot();
     const timeline = getCachedTimeline();
-    
     setSnapshot(currentSnapshot);
     setTimelineData(timeline);
+    setDataSource('local');
     setIsLoading(false);
   };
 
   const handleCompute = async () => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    if (backendOnline) {
+      try {
+        const result = await computeRegime({
+          startDate: format(dateRange.from, 'yyyy-MM-dd'),
+          endDate: format(dateRange.to, 'yyyy-MM-dd'),
+          mode: isDemoMode ? 'demo' : 'auto',
+        });
+        const norm = normaliseResponse(result);
+        setSnapshot(norm);
+        setTimelineData(norm.timelineData);
+        setDataSource('backend');
+        setIsLoading(false);
+        return;
+      } catch (err) {
+        console.warn('Backend compute failed, using local mock:', err.message);
+      }
+    }
+    // Local fallback
+    await new Promise(r => setTimeout(r, 1200));
     const newSnapshot = generateCurrentSnapshot();
     setSnapshot(newSnapshot);
+    setDataSource('local');
     setIsLoading(false);
   };
 
