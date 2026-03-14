@@ -58,33 +58,7 @@ export default function Dashboard() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [backendOnline, isDemoMode]);
-
-  const loadData = async () => {
-    setIsLoading(true);
-    try {
-      const result = await computeRegime({
-        startDate: '2020-01-01',
-        endDate: format(new Date(), 'yyyy-MM-dd'),
-        mode: isDemoMode ? 'demo' : 'auto',
-      });
-      const norm = normaliseResponse(result);
-      setSnapshot(norm);
-      setTimelineData(norm.timelineData);
-      setDataSource('backend');
-      setBackendOnline(true);
-      enrichWithEngine(norm);
-    } catch {
-      setBackendOnline(false);
-      const snap = generateCurrentSnapshot();
-      const tl   = getCachedTimeline();
-      setSnapshot(snap);
-      setTimelineData(tl);
-      setDataSource('local');
-      enrichWithEngine(snap);
-    }
-    setIsLoading(false);
-  };
+  }, []);
 
   const enrichWithEngine = (snap) => {
     if (!snap?.features) return;
@@ -92,31 +66,24 @@ export default function Dashboard() {
     setDecomposition(result.decomposition);
   };
 
+  const loadData = () => {
+    setIsLoading(true);
+    const snap = getCachedSnapshot();
+    const tl   = getCachedTimeline();
+    setSnapshot(snap);
+    setTimelineData(tl);
+    enrichWithEngine(snap);
+    setIsLoading(false);
+  };
+
   useEffect(() => { loadData(); }, []);
 
-  const handleCompute = async () => {
+  const handleCompute = () => {
     setIsLoading(true);
-    if (backendOnline) {
-      try {
-        const result = await computeRegime({
-          startDate: '2020-01-01',
-          endDate: format(new Date(), 'yyyy-MM-dd'),
-          mode: isDemoMode ? 'demo' : 'auto',
-        });
-        const norm = normaliseResponse(result);
-        setSnapshot(norm);
-        setTimelineData(norm.timelineData);
-        setDataSource('backend');
-        enrichWithEngine(norm);
-        setIsLoading(false);
-        return;
-      } catch {}
-    }
-    const snap = generateCurrentSnapshot();
+    const snap = getCachedSnapshot();
     setSnapshot(snap);
     enrichWithEngine(snap);
-    setDataSource('local');
-    setIsLoading(false);
+    setTimeout(() => setIsLoading(false), 600);
   };
 
   return (
