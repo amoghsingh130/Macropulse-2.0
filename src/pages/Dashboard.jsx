@@ -121,7 +121,27 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              {/* Date picker */}
+              <div className="hidden sm:flex items-center gap-2">
+                <input
+                  type="date"
+                  value={selectedDate}
+                  min="2020-01-01"
+                  max={new Date().toISOString().slice(0, 10)}
+                  onChange={handleDateChange}
+                  className="bg-slate-800 border border-slate-700 text-slate-300 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-violet-500 focus:border-violet-500"
+                />
+                {selectedDate && (
+                  <button
+                    onClick={() => handleDateChange({ target: { value: '' } })}
+                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                  >
+                    Today
+                  </button>
+                )}
+              </div>
+
               {/* Investor Mode */}
               <div className="hidden md:block">
                 <InvestorModeSelector value={riskTolerance} onChange={setRiskTolerance} />
