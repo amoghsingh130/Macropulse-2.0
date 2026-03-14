@@ -25,7 +25,7 @@ import InvestorModeSelector  from '@/components/macropulse/InvestorModeSelector'
 import ShockSimulator        from '@/components/macropulse/ShockSimulator';
 import AllocationWeights     from '@/components/macropulse/AllocationWeights';
 
-import { getCachedSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
+import { getCachedSnapshot, getCachedTimeline, getSnapshotForDate } from '@/components/macropulse/mockData';
 import { classifyRegime }                       from '@/components/macropulse/regimeEngine';
 
 const TABS = [
