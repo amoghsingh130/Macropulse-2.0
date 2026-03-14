@@ -162,6 +162,39 @@ export function generateCurrentSnapshot() {
   };
 }
 
+// Get a full snapshot for any historical date
+export function getSnapshotForDate(dateStr) {
+  const timeline = getCachedTimeline();
+  // Find exact match or closest prior date
+  let entry = timeline.find(d => d.date === dateStr);
+  if (!entry) {
+    const sorted = timeline.filter(d => d.date <= dateStr);
+    entry = sorted[sorted.length - 1] || timeline[0];
+  }
+  if (!entry) return null;
+  const allocation = regimeAllocation[entry.regime];
+  return {
+    date: entry.date,
+    regime: entry.regime,
+    confidence: entry.confidence,
+    spy_price: entry.spy_price,
+    overweight_assets: allocation.overweight,
+    underweight_assets: allocation.underweight,
+    explanation: allocation.explanation,
+    triggers: allocation.triggers,
+    features: {
+      spy_r21d: (Math.random() * 10 - 3).toFixed(2),
+      qqq_r21d: (Math.random() * 12 - 4).toFixed(2),
+      tlt_r21d: (Math.random() * 6 - 3).toFixed(2),
+      hyg_lqd_ratio: (0.95 + Math.random() * 0.1).toFixed(4),
+      tip_ief_ratio: (0.98 + Math.random() * 0.08).toFixed(4),
+      uup_r21d: (Math.random() * 4 - 2).toFixed(2),
+      dbc_r21d: (Math.random() * 8 - 2).toFixed(2),
+      spy_vol21d: (12 + Math.random() * 10).toFixed(2),
+    },
+  };
+}
+
 // Export cached timeline for consistent demo
 let cachedTimeline = null;
 export function getCachedTimeline() {
