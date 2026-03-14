@@ -117,19 +117,6 @@ export default function Dashboard() {
                 <InvestorModeSelector value={riskTolerance} onChange={setRiskTolerance} />
               </div>
 
-              {/* Demo/Live toggle */}
-              <button
-                onClick={() => setIsDemoMode(m => !m)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm transition-all ${
-                  isDemoMode
-                    ? 'border-amber-500/40 bg-amber-500/10 text-amber-400'
-                    : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
-                }`}
-              >
-                {isDemoMode ? <Database className="w-4 h-4" /> : <Globe className="w-4 h-4" />}
-                {isDemoMode ? 'Demo' : 'Live'}
-              </button>
-
               <Button
                 onClick={handleCompute}
                 disabled={isLoading}
