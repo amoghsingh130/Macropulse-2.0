@@ -78,10 +78,20 @@ export default function Dashboard() {
 
   const handleCompute = () => {
     setIsLoading(true);
-    const snap = getCachedSnapshot();
+    const snap = selectedDate ? getSnapshotForDate(selectedDate) : getCachedSnapshot();
     setSnapshot(snap);
     enrichWithEngine(snap);
     setTimeout(() => setIsLoading(false), 600);
+  };
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setSelectedDate(date);
+    setIsLoading(true);
+    const snap = date ? getSnapshotForDate(date) : getCachedSnapshot();
+    setSnapshot(snap);
+    enrichWithEngine(snap);
+    setTimeout(() => setIsLoading(false), 400);
   };
 
   return (
