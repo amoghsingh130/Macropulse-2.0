@@ -170,3 +170,12 @@ export function getCachedTimeline() {
   }
   return cachedTimeline;
 }
+
+// Export cached snapshot for consistent demo
+let cachedSnapshot = null;
+export function getCachedSnapshot() {
+  if (!cachedSnapshot) {
+    cachedSnapshot = generateCurrentSnapshot();
+  }
+  return cachedSnapshot;
+}
