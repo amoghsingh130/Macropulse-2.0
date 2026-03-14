@@ -29,8 +29,6 @@ import AllocationWeights     from '@/components/macropulse/AllocationWeights';
 import { getCachedSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
 import { classifyRegime }                       from '@/components/macropulse/regimeEngine';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
 const TABS = [
   { key: 'overview',     label: 'Overview',     icon: Activity  },
   { key: 'backtest',     label: 'Backtest',      icon: BarChart2 },
