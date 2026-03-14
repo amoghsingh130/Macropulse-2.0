@@ -43,6 +43,7 @@ export default function Dashboard() {
   const [riskTolerance,  setRiskTolerance]  = useState('balanced');
   const [regimeHistory,  setRegimeHistory]  = useState([]);
   const [decomposition,  setDecomposition]  = useState(null);
+  const [selectedDate,   setSelectedDate]   = useState('');   // '' = today/live
 
   // Keyboard shortcut "R" to refresh
   useEffect(() => {
