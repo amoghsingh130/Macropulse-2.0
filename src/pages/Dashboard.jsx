@@ -42,9 +42,6 @@ export default function Dashboard() {
   const [isLoading,      setIsLoading]      = useState(true);
   const [snapshot,       setSnapshot]       = useState(null);
   const [timelineData,   setTimelineData]   = useState([]);
-  const [backendOnline,  setBackendOnline]  = useState(false);
-  const [dataSource,     setDataSource]     = useState('local');
-  const [isDemoMode,     setIsDemoMode]     = useState(true);
   const [activeTab,      setActiveTab]      = useState('overview');
   const [riskTolerance,  setRiskTolerance]  = useState('balanced');
   const [regimeHistory,  setRegimeHistory]  = useState([]);
