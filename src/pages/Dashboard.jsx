@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { format } from 'date-fns';
 import {
   RefreshCw, Zap, Activity,
