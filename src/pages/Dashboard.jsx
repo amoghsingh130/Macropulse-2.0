@@ -155,21 +155,6 @@ export default function Dashboard() {
       {/* Main */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
-        {/* Backend banner — only when online */}
-        {dataSource === 'backend' && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            className={`p-3 rounded-xl border flex items-center gap-3 ${
-              isDemoMode ? 'bg-amber-500/10 border-amber-500/30' : 'bg-emerald-500/10 border-emerald-500/30'
-            }`}
-          >
-            <Database className={`w-4 h-4 ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`} />
-            <p className={`text-sm font-medium ${isDemoMode ? 'text-amber-400' : 'text-emerald-400'}`}>
-              Backend Connected — {isDemoMode ? 'Demo Mode' : 'Live Mode'} · {BACKEND_URL}
-            </p>
-          </motion.div>
-        )}
-
         {/* Mobile investor mode */}
         <div className="md:hidden">
           <InvestorModeSelector value={riskTolerance} onChange={setRiskTolerance} />
