@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { format } from 'date-fns';
 import {
-  RefreshCw, Zap, Activity, Globe, Database,
-  BarChart2, Microscope, Flame, TrendingUp,
+  RefreshCw, Zap, Activity,
+  BarChart2, Microscope, Flame,
 } from 'lucide-react';
 
 import RegimeBadge          from '@/components/macropulse/RegimeBadge';
