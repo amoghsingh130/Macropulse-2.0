@@ -26,9 +26,8 @@ import InvestorModeSelector  from '@/components/macropulse/InvestorModeSelector'
 import ShockSimulator        from '@/components/macropulse/ShockSimulator';
 import AllocationWeights     from '@/components/macropulse/AllocationWeights';
 
-import { generateCurrentSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
-import { computeRegime, normaliseResponse }            from '@/components/macropulse/api';
-import { classifyRegime }                              from '@/components/macropulse/regimeEngine';
+import { getCachedSnapshot, getCachedTimeline } from '@/components/macropulse/mockData';
+import { classifyRegime }                       from '@/components/macropulse/regimeEngine';
 
 const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
