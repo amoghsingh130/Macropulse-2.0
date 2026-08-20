@@ -1,0 +1,63 @@
+{
+  "name": "MarketSnapshot",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Snapshot date"
+    },
+    "regime": {
+      "type": "string",
+      "enum": [
+        "risk_on",
+        "risk_off",
+        "inflation_shock",
+        "dollar_stress"
+      ],
+      "description": "Classified macro regime"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confidence score 0-100"
+    },
+    "spy_price": {
+      "type": "number",
+      "description": "SPY closing price"
+    },
+    "features": {
+      "type": "object",
+      "description": "Computed features for regime classification"
+    },
+    "overweight_assets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Assets to overweight"
+    },
+    "underweight_assets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Assets to underweight"
+    },
+    "explanation": {
+      "type": "string",
+      "description": "Plain-English explanation"
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What would change this call"
+    }
+  },
+  "required": [
+    "date",
+    "regime",
+    "confidence"
+  ]
+}
